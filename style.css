@@ -1,0 +1,210 @@
+/* =========================================================================
+   Bhuvaneswari Oil Mill - Price Ledger Styles
+   ========================================================================= */
+
+:root {
+    --brown-primary: #8B4513;
+    --brown-dark: #6B3410;
+    --brown-light: #D2A679;
+    --brown-bg: #FFF8F0;
+    --gold-accent: #DAA520;
+}
+
+/* ---- General ---- */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f5f5f7;
+    margin: 0;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* ---- Login Page ---- */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #DAA520 100%);
+    padding: 20px;
+}
+
+.login-container { width: 100%; max-width: 420px; }
+
+.login-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.login-header {
+    text-align: center;
+    padding: 40px 30px 20px;
+    background: linear-gradient(135deg, var(--brown-bg) 0%, #FFF 100%);
+}
+
+.login-icon {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--brown-primary), var(--gold-accent));
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 15px; font-size: 28px; color: white;
+}
+
+.org-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--brown-primary); margin-bottom: 5px;
+}
+
+.login-subtitle { color: #888; font-size: 0.9rem; margin-bottom: 0; }
+
+.login-form { padding: 25px 30px 30px; }
+.login-form .form-label { font-size: 0.85rem; font-weight: 600; color: #555; }
+.login-form .form-control {
+    border-radius: 10px; border-color: #ddd; padding: 12px 16px;
+}
+.login-form .form-control:focus {
+    border-color: var(--brown-primary);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.15);
+}
+
+.login-btn {
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--brown-primary), var(--brown-dark));
+    border: none; padding: 12px; font-weight: 600;
+    letter-spacing: 0.5px; transition: all 0.3s; color: white;
+}
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(135deg, var(--brown-dark), var(--brown-primary));
+    color: white;
+}
+
+/* ---- Navbar ---- */
+.bg-primary-gradient {
+    background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-dark) 100%) !important;
+}
+.brand-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; letter-spacing: 0.5px;
+}
+
+/* ---- Dashboard ---- */
+.dashboard-wrapper {
+    min-height: calc(100vh - 56px);
+    background-color: #f5f5f7;
+}
+
+/* ---- Stat Cards ---- */
+.stat-card {
+    border-radius: 12px; padding: 18px 20px;
+    display: flex; align-items: center; gap: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); }
+.stat-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+}
+.stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1; color: #333; }
+.stat-label { font-size: 0.8rem; color: #888; margin-top: 2px; }
+
+/* ---- Table ---- */
+.card { border-radius: 12px; overflow: hidden; }
+.table th {
+    font-weight: 600; font-size: 0.82rem;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    color: #666; border-bottom: 2px solid #eee;
+}
+.table td { vertical-align: middle; padding: 12px 16px; }
+.product-row { transition: background-color 0.2s; }
+.row-hidden { opacity: 0.5; background-color: #fafafa; }
+.row-hidden .product-name { text-decoration: line-through; color: #999; }
+
+.form-check-input[role="switch"] { width: 2.5em; height: 1.3em; cursor: pointer; }
+.form-check-input:checked {
+    background-color: var(--brown-primary); border-color: var(--brown-primary);
+}
+.form-check-input:focus { box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.2); }
+
+.edit-btn, .delete-btn {
+    width: 34px; height: 34px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 8px;
+}
+
+#searchInput { border-radius: 8px; }
+#searchInput:focus {
+    border-color: var(--brown-primary);
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+}
+
+/* ---- Modal ---- */
+.modal-content { border-radius: 16px; border: none; overflow: hidden; }
+.modal-header { border-bottom: none; padding: 20px 24px; }
+.modal-body { padding: 20px 24px; }
+.modal-footer { border-top: 1px solid #eee; padding: 16px 24px; }
+
+/* ---- Public Page ---- */
+.public-page { min-height: 100vh; background-color: var(--brown-bg); }
+.public-header {
+    background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-dark) 60%, #4a2000 100%);
+    color: white;
+}
+.public-logo {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    font-size: 2.5rem; backdrop-filter: blur(10px);
+}
+.table-brown { background-color: var(--brown-primary) !important; }
+.table-brown th {
+    color: white !important; border-bottom: none !important;
+    text-transform: uppercase; font-size: 0.82rem;
+    letter-spacing: 0.5px; padding: 14px 16px;
+}
+.price-badge {
+    background: #e8f5e9; color: #2e7d32;
+    padding: 4px 12px; border-radius: 20px;
+    font-weight: 600; font-size: 0.95rem;
+}
+
+/* ---- Buttons ---- */
+.btn-success { background-color: #2e7d32; border-color: #2e7d32; }
+.btn-success:hover { background-color: #1b5e20; }
+.btn-info { background-color: #0288d1; border-color: #0288d1; }
+.btn-info:hover { background-color: #01579b; }
+
+/* ---- Toast ---- */
+.toast {
+    border-radius: 12px; border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+    .stat-card { padding: 14px 16px; }
+    .stat-value { font-size: 1.2rem; }
+    .brand-text { font-size: 1rem; }
+    .login-header { padding: 30px 20px 15px; }
+    .login-form { padding: 20px; }
+}
+
+@media print {
+    .no-print { display: none !important; }
+    body { background: white !important; }
+    .public-header { background: white !important; color: #333 !important; padding: 20px 0 !important; }
+    .public-header h1 { color: var(--brown-primary) !important; }
+    .public-logo { background: none !important; color: var(--brown-primary) !important; }
+    .price-table { box-shadow: none !important; }
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #bbb; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #999; }

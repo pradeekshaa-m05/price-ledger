@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhuvaneswari Oil Mill - Price Ledger</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- ================================================================== -->
+<!-- SETUP PAGE (first-time only)                                       -->
+<!-- ================================================================== -->
+<div id="page-setup" class="page">
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon"><i class="bi bi-droplet-fill"></i></div>
+                    <h1 class="org-name">Bhuvaneswari Oil Mill</h1>
+                    <p class="login-subtitle">First-Time Setup — Create Admin Password</p>
+                </div>
+                <form class="login-form" id="setupForm">
+                    <div class="mb-3">
+                        <label class="form-label"><i class="bi bi-lock"></i> Create Password</label>
+                        <input type="password" class="form-control form-control-lg" id="setupPassword" placeholder="Min 4 characters" required minlength="4">
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><i class="bi bi-lock-fill"></i> Confirm Password</label>
+                        <input type="password" class="form-control form-control-lg" id="setupConfirm" placeholder="Re-enter password" required minlength="4">
+                    </div>
+                    <button type="submit" class="btn btn-lg w-100 login-btn">
+                        <i class="bi bi-shield-check"></i> Set Password & Continue
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- LOGIN PAGE                                                         -->
+<!-- ================================================================== -->
+<div id="page-login" class="page">
+    <div class="login-page">
+        <div class="login-container">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon"><i class="bi bi-droplet-fill"></i></div>
+                    <h1 class="org-name">Bhuvaneswari Oil Mill</h1>
+                    <p class="login-subtitle">Price Ledger — Admin Portal</p>
+                </div>
+                <div id="loginAlert" class="alert alert-danger mx-4 d-none" role="alert"></div>
+                <form class="login-form" id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label"><i class="bi bi-person"></i> Username</label>
+                        <input type="text" class="form-control form-control-lg" id="loginUsername" placeholder="admin" value="admin" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label"><i class="bi bi-lock"></i> Password</label>
+                        <input type="password" class="form-control form-control-lg" id="loginPassword" placeholder="Enter password" required>
+                    </div>
+                    <button type="submit" class="btn btn-lg w-100 login-btn">
+                        <i class="bi bi-box-arrow-in-right"></i> Sign In
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- DASHBOARD PAGE                                                     -->
+<!-- ================================================================== -->
+<div id="page-dashboard" class="page">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary-gradient sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-droplet-fill me-2 fs-4"></i>
+                <span class="brand-text">Bhuvaneswari Oil Mill</span>
+            </a>
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-white-50 d-none d-md-inline">
+                    <i class="bi bi-person-circle"></i> Admin
+                </span>
+                <button class="btn btn-outline-light btn-sm" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <div class="container-fluid px-4 py-4">
+
+            <!-- Action Bar -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                <div>
+                    <h2 class="mb-1 fw-bold text-dark">
+                        <i class="bi bi-speedometer2 me-2"></i>Product Dashboard
+                    </h2>
+                    <p class="text-muted mb-0">Manage your products, prices, and visibility</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                        <i class="bi bi-plus-circle"></i> Add Product
+                    </button>
+                    <button class="btn btn-info text-white" id="shareBtnTop">
+                        <i class="bi bi-share"></i> Share
+                    </button>
+                    <button class="btn btn-outline-danger" id="pdfBtnTop">
+                        <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                    </button>
+                    <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                        <i class="bi bi-gear"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="row g-3 mb-4">
+                <div class="col-6 col-md-3">
+                    <div class="stat-card bg-white">
+                        <div class="stat-icon bg-primary-subtle text-primary"><i class="bi bi-box-seam"></i></div>
+                        <div>
+                            <div class="stat-value" id="statTotal">0</div>
+                            <div class="stat-label">Total Products</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card bg-white">
+                        <div class="stat-icon bg-success-subtle text-success"><i class="bi bi-eye"></i></div>
+                        <div>
+                            <div class="stat-value" id="statVisible">0</div>
+                            <div class="stat-label">Visible</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card bg-white">
+                        <div class="stat-icon bg-warning-subtle text-warning"><i class="bi bi-eye-slash"></i></div>
+                        <div>
+                            <div class="stat-value" id="statHidden">0</div>
+                            <div class="stat-label">Hidden</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="stat-card bg-white">
+                        <div class="stat-icon bg-info-subtle text-info"><i class="bi bi-link-45deg"></i></div>
+                        <div>
+                            <div class="stat-value"><i class="bi bi-check-circle-fill text-success"></i></div>
+                            <div class="stat-label">Share Ready</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0 fw-semibold"><i class="bi bi-table me-2"></i>Product List</h5>
+                    <div class="input-group" style="max-width: 280px;">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control border-start-0" id="searchInput" placeholder="Search products...">
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th width="60" class="text-center">#</th>
+                                    <th>Product Name</th>
+                                    <th width="140" class="text-end">Price (₹)</th>
+                                    <th width="120" class="text-center">Unit</th>
+                                    <th width="100" class="text-center">Visible</th>
+                                    <th width="140" class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTableBody">
+                                <!-- Rendered by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- PUBLIC VIEW PAGE                                                   -->
+<!-- ================================================================== -->
+<div id="page-public" class="page">
+    <div class="public-page">
+        <div class="public-header">
+            <div class="container">
+                <div class="text-center py-5">
+                    <div class="public-logo mb-3"><i class="bi bi-droplet-fill"></i></div>
+                    <h1 class="display-5 fw-bold mb-2">Bhuvaneswari Oil Mill</h1>
+                    <p class="lead mb-1 opacity-75">Product Price List</p>
+                    <p class="small opacity-50"><i class="bi bi-clock"></i> <span id="publicDate"></span></p>
+                </div>
+            </div>
+        </div>
+        <div class="container py-4">
+            <div class="d-flex justify-content-end gap-2 mb-4 no-print">
+                <button class="btn btn-outline-danger" id="publicPdfBtn">
+                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                </button>
+                <button class="btn btn-outline-secondary" onclick="window.print()">
+                    <i class="bi bi-printer"></i> Print
+                </button>
+            </div>
+            <div id="publicTableContainer">
+                <!-- Rendered by JS -->
+            </div>
+            <div class="text-center mt-4 text-muted no-print">
+                <small><i class="bi bi-shield-lock"></i> This is a read-only view shared by Bhuvaneswari Oil Mill</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- ADD PRODUCT MODAL                                                  -->
+<!-- ================================================================== -->
+<div class="modal fade" id="addProductModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title"><i class="bi bi-plus-circle me-2"></i>Add New Product</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Product Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="addName" placeholder="e.g., Groundnut Oil" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-7 mb-3">
+                            <label class="form-label fw-semibold">Price (₹) <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="addPrice" step="0.01" min="0" placeholder="e.g., 250.00" required>
+                        </div>
+                        <div class="col-5 mb-3">
+                            <label class="form-label fw-semibold">Unit</label>
+                            <select class="form-select" id="addUnit">
+                                <!-- Populated dynamically from saved units -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="addVisible" checked>
+                        <label class="form-check-label" for="addVisible">Visible to customers</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" id="saveProductBtn">
+                    <i class="bi bi-check-lg"></i> Add Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- EDIT PRODUCT MODAL -->
+<div class="modal fade" id="editProductModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title"><i class="bi bi-pencil me-2"></i>Edit Product</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <input type="hidden" id="editId">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Product Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="editName" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-7 mb-3">
+                            <label class="form-label fw-semibold">Price (₹) <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" id="editPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="col-5 mb-3">
+                            <label class="form-label fw-semibold">Unit</label>
+                            <select class="form-select" id="editUnit">
+                                <!-- Populated dynamically from saved units -->
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="updateProductBtn">
+                    <i class="bi bi-check-lg"></i> Update Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle me-2"></i>Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Are you sure you want to delete<br><strong id="deleteProductName"></strong>?</p>
+                <input type="hidden" id="deleteProductId">
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-info text-white">
+                <h5 class="modal-title"><i class="bi bi-share me-2"></i>Share Price List</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted mb-3">Share this link with your customers. Only <span class="badge bg-success">Visible</span> products are included.</p>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="shareUrl" readonly>
+                    <button class="btn btn-outline-primary" id="copyLinkBtn" title="Copy">
+                        <i class="bi bi-clipboard"></i>
+                    </button>
+                </div>
+                <div class="d-flex gap-2 mb-3">
+                    <button class="btn btn-outline-primary flex-fill" id="openShareLink">
+                        <i class="bi bi-box-arrow-up-right"></i> Open Link
+                    </button>
+                    <button class="btn btn-outline-danger flex-fill" id="sharePdfBtn">
+                        <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                    </button>
+                </div>
+                <hr>
+                <h6 class="fw-semibold mb-2"><i class="bi bi-database me-1"></i> Data Backup</h6>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-success btn-sm flex-fill" id="exportDataBtn">
+                        <i class="bi bi-download"></i> Export Data
+                    </button>
+                    <label class="btn btn-outline-warning btn-sm flex-fill mb-0">
+                        <i class="bi bi-upload"></i> Import Data
+                        <input type="file" id="importDataInput" accept=".json" class="d-none">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal fade" id="settingsModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-gear me-2"></i>Settings</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="fw-semibold mb-3"><i class="bi bi-rulers me-1"></i> Manage Units</h6>
+                <p class="text-muted small mb-2">Add custom units that appear in the product dropdowns.</p>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="newUnitInput" placeholder="e.g., per can, per bundle">
+                    <button class="btn btn-success" id="addUnitBtn" type="button">
+                        <i class="bi bi-plus-lg"></i> Add
+                    </button>
+                </div>
+                <div id="unitsList" class="mb-3" style="max-height: 200px; overflow-y: auto;">
+                    <!-- Rendered by JS -->
+                </div>
+                <hr>
+                <h6 class="fw-semibold mb-3">Change Password</h6>
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="currentPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="newPassword" required minlength="4">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirmNewPassword" required minlength="4">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-shield-lock"></i> Change Password
+                    </button>
+                </form>
+                <hr>
+                <h6 class="fw-semibold mb-3 text-danger">Danger Zone</h6>
+                <button class="btn btn-outline-danger btn-sm" id="resetAppBtn">
+                    <i class="bi bi-exclamation-triangle"></i> Reset Entire App
+                </button>
+                <small class="text-muted d-block mt-1">This will delete all products and reset your password.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999">
+    <div id="toast" class="toast" role="alert">
+        <div class="toast-header">
+            <i class="bi me-2" id="toastIcon"></i>
+            <strong class="me-auto" id="toastTitle">Notification</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body" id="toastBody"></div>
+    </div>
+</div>
+
+<!-- CDN Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pako@2.1.0/dist/pako.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.4/dist/jspdf.plugin.autotable.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
